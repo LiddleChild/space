@@ -7,8 +7,18 @@ import (
 	"os"
 	"path"
 
+	"github.com/LiddleChild/space/internal/models"
+	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
+
+var AppConfig *Config
+
+func init() {
+	var err error
+	AppConfig, err = Load()
+	cobra.CheckErr(err)
+}
 
 type ConfigMetadata struct {
 	directory string
@@ -18,6 +28,7 @@ type ConfigMetadata struct {
 
 type Config struct {
 	metadata ConfigMetadata `json:"-"`
+	Spaces   []models.Space `json:"spaces"`
 }
 
 func Load() (*Config, error) {
