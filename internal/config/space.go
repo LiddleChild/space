@@ -26,3 +26,7 @@ func (cfg *Config) CreateSpace(name string) error {
 
 	return nil
 }
+
+func (cfg *Config) GetSpaces() []models.Space {
+	return cfg.Spaces
+}
