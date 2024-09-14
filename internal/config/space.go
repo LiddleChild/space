@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/LiddleChild/space/internal/models"
@@ -10,6 +11,12 @@ func (cfg *Config) CreateSpace(name string) error {
 	pwd, err := os.Getwd()
 	if err != nil {
 		return err
+	}
+
+	for _, space := range cfg.Spaces {
+		if space.Name == name {
+			return fmt.Errorf("%s already exists", space.Name)
+		}
 	}
 
 	space := models.Space{
