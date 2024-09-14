@@ -27,8 +27,8 @@ type ConfigMetadata struct {
 }
 
 type Config struct {
-	metadata ConfigMetadata `json:"-"`
-	Spaces   []models.Space `json:"spaces"`
+	metadata ConfigMetadata          `json:"-"`
+	Spaces   map[string]models.Space `json:"spaces"`
 }
 
 func Load() (*Config, error) {
@@ -43,6 +43,7 @@ func Load() (*Config, error) {
 			name:      "settings",
 			ext:       "json",
 		},
+		Spaces: make(map[string]models.Space),
 	}
 
 	viper.AddConfigPath(cfg.metadata.directory)

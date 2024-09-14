@@ -13,11 +13,12 @@ var ListCmd = &cobra.Command{
 	Short: "list workspaces",
 	Run: func(cmd *cobra.Command, args []string) {
 		longestName := 0
-		for _, space := range config.AppConfig.GetSpaces() {
+		spaces := config.AppConfig.GetSpaces()
+		for _, space := range spaces {
 			longestName = max(longestName, len(space.Name))
 		}
 
-		for _, space := range config.AppConfig.GetSpaces() {
+		for _, space := range spaces {
 			fmt.Printf("%s%s%s\n", space.Name, strings.Repeat(" ", longestName-len(space.Name)+4), space.Path)
 		}
 	},

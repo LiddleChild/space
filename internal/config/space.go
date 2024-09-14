@@ -19,12 +19,10 @@ func (cfg *Config) CreateSpace(name string) error {
 		}
 	}
 
-	space := models.Space{
+	cfg.Spaces[name] = models.Space{
 		Name: name,
 		Path: pwd,
 	}
-
-	cfg.Spaces = append(cfg.Spaces, space)
 
 	err = cfg.Save()
 	if err != nil {
@@ -35,5 +33,9 @@ func (cfg *Config) CreateSpace(name string) error {
 }
 
 func (cfg *Config) GetSpaces() []models.Space {
-	return cfg.Spaces
+	spaces := make([]models.Space, 0, len(cfg.Spaces))
+	for _, val := range cfg.Spaces {
+		spaces = append(spaces, val)
+	}
+	return spaces
 }
