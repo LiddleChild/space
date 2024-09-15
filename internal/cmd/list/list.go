@@ -11,6 +11,7 @@ import (
 var ListCmd = &cobra.Command{
 	Use:   "list",
 	Short: "list workspaces",
+	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		longestName := 0
 		spaces := config.AppConfig.GetSpaces()

@@ -13,14 +13,7 @@ var OpenCmd = &cobra.Command{
 	Short: "change working directory to specific space",
 	Args:  cobra.MatchAll(cobra.ExactArgs(1), cobra.OnlyValidArgs),
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
-		spaces := config.AppConfig.GetSpaces()
-
-		names := make([]string, 0, len(spaces))
-		for _, space := range spaces {
-			names = append(names, space.Name)
-		}
-
-		return names, cobra.ShellCompDirectiveNoFileComp
+		return config.AppConfig.GetSpaceNames(), cobra.ShellCompDirectiveNoFileComp
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		name := args[0]

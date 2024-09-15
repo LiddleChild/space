@@ -40,6 +40,14 @@ func (cfg *Config) GetSpaces() []models.Space {
 	return spaces
 }
 
+func (cfg *Config) GetSpaceNames() []string {
+	names := make([]string, 0, len(cfg.Spaces))
+	for _, val := range cfg.Spaces {
+		names = append(names, val.Name)
+	}
+	return names
+}
+
 func (cfg *Config) GetSpace(name string) (models.Space, error) {
 	space, ok := cfg.Spaces[name]
 	if !ok {
