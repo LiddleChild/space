@@ -40,6 +40,14 @@ func (cfg *Config) GetSpaces() []models.Space {
 	return spaces
 }
 
+func (cfg *Config) GetSpace(name string) (models.Space, error) {
+	space, ok := cfg.Spaces[name]
+	if !ok {
+		return models.Space{}, fmt.Errorf("%s does not exist", name)
+	}
+	return space, nil
+}
+
 func (cfg *Config) RemoveSpace(name string) error {
 	_, ok := cfg.Spaces[name]
 	if !ok {
