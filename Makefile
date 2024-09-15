@@ -1,5 +1,8 @@
 all:
-	go run ./cmd/main.go
+	go run ./cmd/space/main.go
 
 build:
-	go build -o space ./cmd/main.go
+	go build -o space ./cmd/space/main.go
+
+install:
+	cd ./cmd/space; go install
