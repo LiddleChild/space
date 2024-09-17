@@ -2,10 +2,9 @@ package open
 
 import (
 	"fmt"
-	"os"
-	"syscall"
 
 	"github.com/LiddleChild/space/internal/config"
+	"github.com/LiddleChild/space/internal/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -23,9 +22,7 @@ var OpenCmd = &cobra.Command{
 		space, err := config.AppConfig.GetSpace(name)
 		cobra.CheckErr(err)
 
-		shell := os.Getenv("SHELL")
-		envs := append(syscall.Environ(), fmt.Sprintf("SPACE_WD=%s", space.Path))
-		err = syscall.Exec(shell, []string{shell}, envs)
+		utils.Shell(fmt.Sprintf("SPACE_WD=%s", space.Path))
 		cobra.CheckErr(err)
 	},
 }
