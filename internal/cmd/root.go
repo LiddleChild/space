@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/LiddleChild/space/internal/cmd/create"
 	"github.com/LiddleChild/space/internal/cmd/list"
@@ -26,6 +27,10 @@ var rootCmd = &cobra.Command{
 		cobra.CheckErr(err)
 
 		space, err := config.AppConfig.GetSpace(result)
+		cobra.CheckErr(err)
+
+		space.LastOpened = time.Now()
+		err = config.AppConfig.Save()
 		cobra.CheckErr(err)
 
 		err = utils.Shell(fmt.Sprintf("SPACE_WD=%s", space.Path))

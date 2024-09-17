@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/LiddleChild/space/internal/models"
 )
@@ -19,9 +20,10 @@ func (cfg *Config) CreateSpace(name string) error {
 		}
 	}
 
-	cfg.Spaces[name] = models.Space{
-		Name: name,
-		Path: pwd,
+	cfg.Spaces[name] = &models.Space{
+		Name:       name,
+		Path:       pwd,
+		LastOpened: time.Now(),
 	}
 
 	err = cfg.Save()
@@ -32,8 +34,8 @@ func (cfg *Config) CreateSpace(name string) error {
 	return nil
 }
 
-func (cfg *Config) GetSpaces() []models.Space {
-	spaces := make([]models.Space, 0, len(cfg.Spaces))
+func (cfg *Config) GetSpaces() []*models.Space {
+	spaces := make([]*models.Space, 0, len(cfg.Spaces))
 	for _, val := range cfg.Spaces {
 		spaces = append(spaces, val)
 	}
@@ -48,10 +50,10 @@ func (cfg *Config) GetSpaceNames() []string {
 	return names
 }
 
-func (cfg *Config) GetSpace(name string) (models.Space, error) {
+func (cfg *Config) GetSpace(name string) (*models.Space, error) {
 	space, ok := cfg.Spaces[name]
 	if !ok {
-		return models.Space{}, fmt.Errorf("%s does not exist", name)
+		return nil, fmt.Errorf("%s does not exist", name)
 	}
 	return space, nil
 }
