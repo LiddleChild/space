@@ -3,6 +3,8 @@ package create
 import (
 	"errors"
 	"fmt"
+	"os"
+	"strings"
 
 	"github.com/LiddleChild/space/internal/config"
 	"github.com/manifoldco/promptui"
@@ -32,8 +34,15 @@ var CreateCmd = &cobra.Command{
 }
 
 func inputPrompt() (string, error) {
+	dir, err := os.Getwd()
+	if err != nil {
+		return "", err
+	}
+
+	suggestedName := dir[strings.LastIndex(dir, "/")+1:]
+
 	input := promptui.Prompt{
-		Label: "space name",
+		Label: fmt.Sprintf("name (%s)", suggestedName),
 		Validate: func(input string) error {
 			_, err := config.AppConfig.GetSpace(input)
 			if err != nil {
@@ -46,6 +55,10 @@ func inputPrompt() (string, error) {
 	result, err := input.Run()
 	if err != nil {
 		return "", err
+	}
+
+	if len(result) == 0 {
+		return suggestedName, nil
 	}
 
 	return result, nil
