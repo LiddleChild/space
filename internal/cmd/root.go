@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/LiddleChild/space/internal/cmd/create"
@@ -18,9 +19,15 @@ var rootCmd = &cobra.Command{
 	Use:   "space",
 	Short: "(work)space is a workspace manager",
 	Run: func(cmd *cobra.Command, args []string) {
+		names := config.AppConfig.GetSpaceNames()
+		if len(names) == 0 {
+			fmt.Println("no space created")
+			os.Exit(0)
+		}
+
 		selection := promptui.Select{
 			Label: "space",
-			Items: config.AppConfig.GetSpaceNames(),
+			Items: names,
 		}
 
 		_, result, err := selection.Run()

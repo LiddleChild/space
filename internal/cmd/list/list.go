@@ -2,6 +2,7 @@ package list
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/LiddleChild/space/internal/config"
@@ -15,6 +16,11 @@ var ListCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		longestName := 0
 		spaces := config.AppConfig.GetSpaces()
+		if len(spaces) == 0 {
+			fmt.Println("no space created")
+			os.Exit(0)
+		}
+
 		for _, space := range spaces {
 			longestName = max(longestName, len(space.Name))
 		}
