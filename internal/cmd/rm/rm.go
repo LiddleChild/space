@@ -1,9 +1,11 @@
 package rm
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/LiddleChild/space/internal/config"
+	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
 
@@ -17,9 +19,38 @@ var RmCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		name := args[0]
 
-		err := config.AppConfig.RemoveSpace(name)
+		result, err := confirmationPrompt(name)
 		cobra.CheckErr(err)
 
-		fmt.Println(name)
+		if result {
+			err = config.AppConfig.RemoveSpace(name)
+			cobra.CheckErr(err)
+
+			fmt.Println(name)
+		}
 	},
+}
+
+func confirmationPrompt(name string) (bool, error) {
+	input := promptui.Prompt{
+		Label: fmt.Sprintf("type \"%s\" for confirmation", name),
+		Validate: func(input string) error {
+			if input != name {
+				return errors.New("space name does not match")
+			}
+
+			return nil
+		},
+	}
+
+	result, err := input.Run()
+	if err != nil {
+		return false, err
+	}
+
+	if result == name {
+		return true, nil
+	}
+
+	return false, nil
 }
