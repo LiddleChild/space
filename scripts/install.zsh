@@ -28,4 +28,7 @@ cat /tmp/space/scripts/rc.zsh >> $HOME/.zshrc
 # clean up
 rm -rf /tmp/space
 
-echo "space is installed"
+# source space
+source $SPACE_DIR/scripts/space.zsh
+
+echo "space is ready to go"
