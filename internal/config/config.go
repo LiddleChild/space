@@ -51,7 +51,7 @@ func Load() (*Config, error) {
 }
 
 func (cfg *Config) Save() error {
-	cfg.ensureConfigDirectory(cfg.metadata.directory)
+	EnsureConfigDirectory(cfg.metadata.directory)
 
 	absoluteConfigPath := path.Join(cfg.metadata.directory, cfg.metadata.filename)
 	f, err := os.OpenFile(absoluteConfigPath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
@@ -69,17 +69,6 @@ func (cfg *Config) Save() error {
 	_, err = f.Write(bytes)
 	if err != nil {
 		return err
-	}
-
-	return nil
-}
-
-func (cfg *Config) ensureConfigDirectory(path string) error {
-	if _, err := os.Stat(path); os.IsNotExist(err) {
-		err := os.MkdirAll(path, 0755)
-		if err != nil {
-			return err
-		}
 	}
 
 	return nil

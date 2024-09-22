@@ -18,6 +18,9 @@ var OpenCmd = &cobra.Command{
 		return config.AppConfig.GetSpaceNames(), cobra.ShellCompDirectiveNoFileComp
 	},
 	Run: func(cmd *cobra.Command, args []string) {
+		err := config.EnsureStartUpScript()
+		cobra.CheckErr(err)
+
 		name := args[0]
 
 		space, err := config.AppConfig.GetSpace(name)

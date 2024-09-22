@@ -19,6 +19,9 @@ var rootCmd = &cobra.Command{
 	Use:   "space",
 	Short: "(work)space is a workspace manager",
 	Run: func(cmd *cobra.Command, args []string) {
+		err := config.EnsureStartUpScript()
+		cobra.CheckErr(err)
+
 		names := config.AppConfig.GetSpaceNames()
 		if len(names) == 0 {
 			fmt.Println("no space created")
