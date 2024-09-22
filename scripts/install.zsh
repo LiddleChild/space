@@ -29,6 +29,6 @@ cat /tmp/space/scripts/rc.zsh >> $HOME/.zshrc
 rm -rf /tmp/space
 
 # source space
-source $SPACE_DIR/scripts/space.zsh
+source $HOME/.zshrc
 
 echo "space is ready to go"
