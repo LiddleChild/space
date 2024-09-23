@@ -30,9 +30,10 @@ fi
 # clean up
 rm -rf /tmp/space
 
-# source space
+# setup auto completion
 autoload -Uz compinit
 compinit
+space completion zsh > $HOME/.config/space/scripts/zsh-completion.zsh
 source $HOME/.config/space/scripts/space.zsh
 
 echo "space is ready to go"
