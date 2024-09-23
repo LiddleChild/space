@@ -23,12 +23,16 @@ mkdir -p $HOME/.config/space/scripts
 cp /tmp/space/scripts/* $HOME/.config/space/scripts/
 
 # setup .zshrc
-cat /tmp/space/scripts/rc.zsh >> $HOME/.zshrc
+if ! grep -q ~/.zshrc -e "space begin"; then
+  cat /tmp/space/scripts/rc.zsh >> $HOME/.zshrc
+fi
 
 # clean up
 rm -rf /tmp/space
 
 # source space
-source $HOME/.zshrc
+autoload -Uz compinit
+compinit
+source $HOME/.config/space/scripts/space.zsh
 
 echo "space is ready to go"
