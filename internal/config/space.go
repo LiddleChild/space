@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"os"
+	"slices"
 	"time"
 
 	"github.com/LiddleChild/space/internal/models"
@@ -47,6 +48,11 @@ func (cfg *Config) GetSpaceNames() []string {
 	for _, val := range cfg.Spaces {
 		names = append(names, val.Name)
 	}
+
+	slices.SortFunc(names, func(a, b string) int {
+		return cfg.Spaces[a].LastOpened.Compare(cfg.Spaces[b].LastOpened) * -1
+	})
+
 	return names
 }
 
