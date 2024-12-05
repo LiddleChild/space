@@ -22,11 +22,6 @@ cd /tmp/space/cmd/space; go install
 mkdir -p $HOME/.config/space/scripts
 cp /tmp/space/scripts/* $HOME/.config/space/scripts/
 
-# setup .zshrc
-if ! grep -q ~/.zshrc -e "space begin"; then
-  cat /tmp/space/scripts/rc.zsh >> $HOME/.zshrc
-fi
-
 # clean up
 rm -rf /tmp/space
 

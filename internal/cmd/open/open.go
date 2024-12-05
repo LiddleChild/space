@@ -1,7 +1,6 @@
 package open
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/LiddleChild/space/internal/config"
@@ -30,7 +29,7 @@ var OpenCmd = &cobra.Command{
 		err = config.AppConfig.Save()
 		cobra.CheckErr(err)
 
-		utils.Shell(fmt.Sprintf("SPACE_WD=%s", space.Path))
+		err = utils.Goto(space.Path)
 		cobra.CheckErr(err)
 	},
 }

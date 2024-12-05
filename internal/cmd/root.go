@@ -43,7 +43,7 @@ var rootCmd = &cobra.Command{
 		err = config.AppConfig.Save()
 		cobra.CheckErr(err)
 
-		err = utils.Shell(fmt.Sprintf("SPACE_WD=%s", space.Path))
+		err = utils.Goto(space.Path)
 		cobra.CheckErr(err)
 	},
 }

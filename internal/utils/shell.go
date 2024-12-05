@@ -2,14 +2,17 @@ package utils
 
 import (
 	"os"
-	"slices"
 	"syscall"
 )
 
-func Shell(envs ...string) error {
+func Goto(path string) error {
+	err := syscall.Chdir(path)
+	if err != nil {
+		return err
+	}
+
 	shell := os.Getenv("SHELL")
-	environ := slices.Insert(syscall.Environ(), 0, envs...)
-	err := syscall.Exec(shell, []string{shell}, environ)
+	err = syscall.Exec(shell, []string{shell}, syscall.Environ())
 	if err != nil {
 		return err
 	}
