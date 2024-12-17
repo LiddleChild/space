@@ -10,6 +10,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var version = "v1.1.0"
+
 var AppConfig *Config
 
 func init() {
@@ -24,6 +26,7 @@ type ConfigMetadata struct {
 }
 
 type Config struct {
+	Version  string                   `json:"-"`
 	metadata ConfigMetadata           `json:"-"`
 	Spaces   map[string]*models.Space `json:"spaces"`
 }
@@ -35,6 +38,7 @@ func Load() (*Config, error) {
 	}
 
 	cfg := &Config{
+		Version: version,
 		metadata: ConfigMetadata{
 			directory: path.Join(homePath, ".config/space"),
 			filename:  "settings.json",

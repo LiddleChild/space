@@ -10,6 +10,7 @@ import (
 	"github.com/LiddleChild/space/internal/cmd/list"
 	"github.com/LiddleChild/space/internal/cmd/open"
 	"github.com/LiddleChild/space/internal/cmd/rm"
+	"github.com/LiddleChild/space/internal/cmd/version"
 	"github.com/LiddleChild/space/internal/config"
 	"github.com/LiddleChild/space/internal/utils"
 	"github.com/ktr0731/go-fuzzyfinder"
@@ -45,7 +46,7 @@ var rootCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(completionCmd, create.CreateCmd, list.ListCmd, rm.RmCmd, open.OpenCmd)
+	rootCmd.AddCommand(completionCmd, create.CreateCmd, list.ListCmd, rm.RmCmd, open.OpenCmd, version.VersionCmd)
 }
 
 func Execute() {
