@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/LiddleChild/space/internal/config"
+	"github.com/LiddleChild/space/internal/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -14,19 +15,16 @@ var ListCmd = &cobra.Command{
 	Short: "list workspaces",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		longestName := 0
 		spaces := config.AppConfig.GetSpaces()
 		if len(spaces) == 0 {
 			fmt.Println("no space created")
 			os.Exit(0)
 		}
 
-		for _, space := range spaces {
-			longestName = max(longestName, len(space.Name))
-		}
+		whitspaces := utils.AlignString(config.AppConfig.GetSpaceNames(), 4)
 
-		for _, space := range spaces {
-			fmt.Printf("%s%s%s\n", space.Name, strings.Repeat(" ", longestName-len(space.Name)+4), space.Path)
+		for i, space := range spaces {
+			fmt.Printf("%s%s%s\n", space.Name, strings.Repeat(" ", whitspaces[i]), space.Path)
 		}
 	},
 }

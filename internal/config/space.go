@@ -40,18 +40,19 @@ func (cfg *Config) GetSpaces() []*models.Space {
 	for _, val := range cfg.Spaces {
 		spaces = append(spaces, val)
 	}
+
+	slices.SortFunc(spaces, func(a, b *models.Space) int {
+		return cfg.Spaces[a.Name].LastOpened.Compare(cfg.Spaces[b.Name].LastOpened) * -1
+	})
+
 	return spaces
 }
 
 func (cfg *Config) GetSpaceNames() []string {
 	names := make([]string, 0, len(cfg.Spaces))
-	for _, val := range cfg.Spaces {
+	for _, val := range cfg.GetSpaces() {
 		names = append(names, val.Name)
 	}
-
-	slices.SortFunc(names, func(a, b string) int {
-		return cfg.Spaces[a].LastOpened.Compare(cfg.Spaces[b].LastOpened) * -1
-	})
 
 	return names
 }

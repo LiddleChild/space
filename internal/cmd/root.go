@@ -1,8 +1,9 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
-	"os"
+	"strings"
 	"time"
 
 	"github.com/LiddleChild/space/internal/cmd/create"
@@ -11,7 +12,7 @@ import (
 	"github.com/LiddleChild/space/internal/cmd/rm"
 	"github.com/LiddleChild/space/internal/config"
 	"github.com/LiddleChild/space/internal/utils"
-	"github.com/manifoldco/promptui"
+	"github.com/ktr0731/go-fuzzyfinder"
 	"github.com/spf13/cobra"
 )
 
@@ -22,23 +23,18 @@ var rootCmd = &cobra.Command{
 		err := config.EnsureStartUpScript()
 		cobra.CheckErr(err)
 
-		names := config.AppConfig.GetSpaceNames()
-		if len(names) == 0 {
-			fmt.Println("no space created")
-			os.Exit(0)
+		spaces := config.AppConfig.GetSpaces()
+		whitespaces := utils.AlignString(config.AppConfig.GetSpaceNames(), 1)
+
+		idx, err := fuzzyfinder.Find(spaces, func(i int) string {
+			return fmt.Sprintf("%s%s%s", spaces[i].Name, strings.Repeat(" ", whitespaces[i]), spaces[i].Path)
+		})
+
+		if !errors.Is(err, fuzzyfinder.ErrAbort) {
+			cobra.CheckErr(err)
 		}
 
-		selection := promptui.Select{
-			Label: "space",
-			Items: names,
-		}
-
-		_, result, err := selection.Run()
-		cobra.CheckErr(err)
-
-		space, err := config.AppConfig.GetSpace(result)
-		cobra.CheckErr(err)
-
+		space := spaces[idx]
 		space.LastOpened = time.Now()
 		err = config.AppConfig.Save()
 		cobra.CheckErr(err)
