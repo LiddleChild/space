@@ -3,6 +3,7 @@ package cmd
 import (
 	"errors"
 	"fmt"
+	"os"
 	"strings"
 	"time"
 
@@ -31,7 +32,9 @@ var rootCmd = &cobra.Command{
 			return fmt.Sprintf("%s%s%s", spaces[i].Name, strings.Repeat(" ", whitespaces[i]), spaces[i].Path)
 		})
 
-		if !errors.Is(err, fuzzyfinder.ErrAbort) {
+		if errors.Is(err, fuzzyfinder.ErrAbort) {
+			os.Exit(0)
+		} else if err != nil {
 			cobra.CheckErr(err)
 		}
 
