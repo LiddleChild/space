@@ -43,8 +43,13 @@ var rootCmd = &cobra.Command{
 		err = config.AppConfig.Save()
 		cobra.CheckErr(err)
 
-		err = utils.Goto(space.Path)
-		cobra.CheckErr(err)
+		if utils.IsInSession() {
+			err = utils.Goto(space.Path)
+			cobra.CheckErr(err)
+		} else {
+			err = utils.NewSession(space.Path)
+			cobra.CheckErr(err)
+		}
 	},
 }
 
