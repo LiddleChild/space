@@ -10,7 +10,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var version = "v1.1.0"
+var version = "v1.2.0"
 
 var AppConfig *Config
 
