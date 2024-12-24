@@ -9,7 +9,7 @@ import (
 	"github.com/LiddleChild/space/internal/models"
 )
 
-func (cfg *Config) CreateSpace(name string) error {
+func (cfg *Config) NewSpace(name string) error {
 	pwd, err := os.Getwd()
 	if err != nil {
 		return err

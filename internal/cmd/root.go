@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/LiddleChild/space/internal/cmd/create"
 	"github.com/LiddleChild/space/internal/cmd/list"
+	"github.com/LiddleChild/space/internal/cmd/new"
 	"github.com/LiddleChild/space/internal/cmd/rm"
 	"github.com/LiddleChild/space/internal/cmd/version"
 	"github.com/LiddleChild/space/internal/config"
@@ -53,7 +53,7 @@ var rootCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(completionCmd, create.CreateCmd, list.ListCmd, rm.RmCmd, version.VersionCmd)
+	rootCmd.AddCommand(completionCmd, new.NewCmd, list.ListCmd, rm.RmCmd, version.VersionCmd)
 }
 
 func Execute() {

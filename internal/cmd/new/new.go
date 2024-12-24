@@ -1,4 +1,4 @@
-package create
+package new
 
 import (
 	"errors"
@@ -11,9 +11,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var CreateCmd = &cobra.Command{
-	Use:   "create <name>",
-	Short: "create workspace at working directory",
+var NewCmd = &cobra.Command{
+	Use:   "new <name>",
+	Short: "new workspace at working directory",
 	Args:  cobra.RangeArgs(0, 1),
 	Run: func(cmd *cobra.Command, args []string) {
 		var name string
@@ -26,7 +26,7 @@ var CreateCmd = &cobra.Command{
 			name = args[0]
 		}
 
-		err = config.AppConfig.CreateSpace(name)
+		err = config.AppConfig.NewSpace(name)
 		cobra.CheckErr(err)
 
 		fmt.Println(name)
