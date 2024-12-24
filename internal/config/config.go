@@ -29,6 +29,7 @@ type Config struct {
 	Version  string                   `json:"-"`
 	metadata ConfigMetadata           `json:"-"`
 	Spaces   map[string]*models.Space `json:"spaces"`
+	Tmux     bool                     `json:"tmux"`
 }
 
 func Load() (*Config, error) {
@@ -44,6 +45,7 @@ func Load() (*Config, error) {
 			filename:  "settings.json",
 		},
 		Spaces: make(map[string]*models.Space),
+		Tmux:   false,
 	}
 
 	err = cfg.readConfigFile(path.Join(cfg.metadata.directory, cfg.metadata.filename))
